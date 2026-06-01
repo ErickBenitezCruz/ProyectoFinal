@@ -9,8 +9,6 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 // --- CONFIGURACIÓN DE LA BASE DE DATOS ---
-// Nota: En desarrollo local usaremos la URL externa de Render.
-// En producción, Render asignará automáticamente la variable de entorno DATABASE_URL.
 const DATABASE_URL = process.env.DATABASE_URL || "postgresql://futbol_db_jmdg_user:l8MQbPnBbkaeSs3zWEdvKg62vJ7AYqC4@dpg-d8ecshk2m8qs738pcjf0-a.oregon-postgres.render.com/futbol_db_jmdg";
 
 const pool = new Pool({
@@ -52,11 +50,11 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 /**
  * @openapi
  * /api/equipos:
- * get:
- * summary: Obtiene la lista de todos los equipos desde la base de datos
- * responses:
- * 200:
- * description: Lista de equipos devuelta con éxito.
+ *   get:
+ *     summary: Obtiene la lista de todos los equipos desde la base de datos
+ *     responses:
+ *       200:
+ *         description: Lista de equipos devuelta con éxito.
  */
 app.get('/api/equipos', async (req, res) => {
     try {
@@ -72,19 +70,19 @@ app.get('/api/equipos', async (req, res) => {
 /**
  * @openapi
  * /api/equipos/{id}:
- * get:
- * summary: Obtiene un equipo por su ID
- * parameters:
- * - in: path
- * name: id
- * required: true
- * schema:
- * type: integer
- * responses:
- * 200:
- * description: Equipo encontrado.
- * 404:
- * description: Equipo no encontrado.
+ *   get:
+ *     summary: Obtiene un equipo por su ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Equipo encontrado.
+ *       404:
+ *         description: Equipo no encontrado.
  */
 app.get('/api/equipos/:id', async (req, res) => {
     try {
@@ -105,27 +103,27 @@ app.get('/api/equipos/:id', async (req, res) => {
 /**
  * @openapi
  * /api/equipos:
- * post:
- * summary: Agrega un nuevo equipo a la base de datos
- * requestBody:
- * required: true
- * content:
- * application/json:
- * schema:
- * type: object
- * required:
- * - nombre
- * - pais
- * properties:
- * nombre:
- * type: string
- * pais:
- * type: string
- * campeonatosUCL:
- * type: integer
- * responses:
- * 201:
- * description: Equipo creado exitosamente.
+ *   post:
+ *     summary: Agrega un nuevo equipo a la base de datos
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - nombre
+ *               - pais
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               pais:
+ *                 type: string
+ *               campeonatosUCL:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Equipo creado exitosamente.
  */
 app.post('/api/equipos', async (req, res) => {
     try {
@@ -144,15 +142,14 @@ app.post('/api/equipos', async (req, res) => {
 /**
  * @openapi
  * /api/jugadores:
- * get:
- * summary: Obtiene la lista de todos los jugadores junto con el nombre de su equipo
- * responses:
- * 200:
- * description: Lista de jugadores devuelta con éxito.
+ *   get:
+ *     summary: Obtiene la lista de todos los jugadores junto con el nombre de su equipo
+ *     responses:
+ *       200:
+ *         description: Lista de jugadores devuelta con éxito.
  */
 app.get('/api/jugadores', async (req, res) => {
     try {
-        // Hacemos un JOIN para traer información limpia
         const query = `
             SELECT j.id, j.nombre, j.posicion, e.nombre AS nombre_equipo 
             FROM jugadores j 
@@ -168,7 +165,7 @@ app.get('/api/jugadores', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('⚽ ¡API de Fútbol Conectada a PostgreSQL! Visita </h1 ><a href="/doc">/doc</a> para interactuar con la base de datos.');
+    res.send('⚽ ¡API de Fútbol Conectada a PostgreSQL! Visita <a href="/doc">/doc</a> para interactuar con la base de datos.');
 });
 
 app.listen(PORT, () => {
