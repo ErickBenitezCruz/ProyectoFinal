@@ -33,7 +33,7 @@ const swaggerOptions = {
                 description: 'Servidor Local'
             },
             {
-                url: 'https://tu-api-desplegada.onrender.com', 
+                url: 'https://api-futbol-74vs.onrender.com', 
                 description: 'Servidor de Producción'
             }
         ],
